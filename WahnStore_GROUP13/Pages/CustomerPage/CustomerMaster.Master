@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CustomerMaster.master.cs" Inherits="WahnStore_GROUP13.Pages.CustomerPage.CustomerMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+          <div>
+            <h2>Wahn Store</h2>
+                <asp:HyperLink ID="hypLogin" runat="server" NavigateUrl="~/Pages/CustomerPage/Login.aspx" Text="Đăng nhập" Visible="false" />
+                <asp:HyperLink ID="hypRegister" runat="server" NavigateUrl="~/Pages/CustomerPage/Register.aspx" Text="Đăng ký" Visible="false" />
+                <asp:HyperLink ID="hypManageAccount" runat="server" NavigateUrl="~/Pages/CustomerPage/ManageAccount.aspx" Text="Quản lý tài khoản" Visible="false" />
+                <asp:HyperLink ID="hypManageCart" runat="server" NavigateUrl="~/Pages/CustomerPage/Cart.aspx" Text="Giỏ hàng" Visible="false" />
+                 <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
+
+        </div>
+        <div class="menu">
+            <a href="Home.aspx">Trang chủ</a>
+            <a href="Shop.aspx">Cửa hàng</a>
+
+        </div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

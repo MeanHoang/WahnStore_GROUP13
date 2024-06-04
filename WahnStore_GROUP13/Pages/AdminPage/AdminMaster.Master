@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMaster.master.cs" Inherits="WahnStore_GROUP13.Pages.AdminPage.AdminMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <a href="ManageProduct.aspx">Quản lý sản phẩm</a>
+            <a href="ManageBrand.aspx">Quản lý thương hiệu</a>
+            <a href="ManageCustomer.aspx">Quản lý khách hàng</a>
+            <a href="ManageAdmin.aspx">Quản lý quản trị viên</a>
+            <a href="ManageOrder.aspx">Quản lý giao dịch</a>
+            <a href="Report.aspx">Thống kê</a>
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
