@@ -61,7 +61,50 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
 
         protected void AddToCartButton_Click(object sender, EventArgs e)
         {
-            
+            // Lấy productId từ HiddenField
+            int productId;
+            if (int.TryParse(Request.QueryString["productId"], out productId))
+            {
+                DataCustomer data = new DataCustomer();
+                // Lấy customerId từ session (giả sử session đã được thiết lập)
+                int customerId = data.GetCustomerIdByUsername(Session["Username"].ToString());
+
+                // Kiểm tra nếu customerId hợp lệ
+                if (customerId != -1)
+                {
+                    // Thêm sản phẩm vào giỏ hàng
+                    DataCart cartData = new DataCart();
+                    DataProduct data1 = new DataProduct();
+                    int cartId = cartData.GetCartIdByCustomerId(customerId);
+                    if (cartId == -1)
+                    {
+                        // Nếu customerId chưa có giỏ hàng, tạo một giỏ hàng mới
+                        cartId = cartData.CreateCart(customerId);
+                    }
+
+                    int quantity = 1; // Số lượng mặc định khi thêm vào giỏ hàng
+                    decimal price = data1.GetProductById(productId).ProductPrice; // Giá của sản phẩm
+                    cartData.AddToCart(cartId, productId, quantity, price);
+
+                    // Chuyển hướng người dùng đến trang giỏ hàng
+                    Response.Redirect("~/Pages/CustomerPage/CartPage.aspx");
+                }
+                else
+                {
+                    // Xử lý trường hợp session không chứa customerId hoặc customerId không hợp lệ
+                    // Ví dụ: Hiển thị thông báo lỗi
+                    // Response.Write("<script>alert('Không thể thêm sản phẩm vào giỏ hàng.');</script>");
+                }
+            }
+            else
+            {
+                // Xử lý trường hợp productId không hợp lệ
+                // Ví dụ: Hiển thị thông báo lỗi
+                // Response.Write("<script>alert('ID sản phẩm không hợp lệ.');</script>");
             }
         }
+
+
+
     }
+}

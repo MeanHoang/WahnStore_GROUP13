@@ -124,9 +124,14 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\AdminPage\AddProduct.aspx" />
     <Content Include="Pages\AdminPage\Dashboard.aspx" />
     <Content Include="Pages\AdminPage\LoginAdmin.aspx" />
+    <Content Include="Pages\AdminPage\ManageProduct.aspx" />
     <Content Include="Pages\AdminPage\RegisterAdmin.aspx" />
+    <Content Include="Pages\AdminPage\UpdateProduct.aspx" />
+    <Content Include="Pages\CustomerPage\CartPage.aspx" />
+    <Content Include="Pages\CustomerPage\Checkout.aspx" />
     <Content Include="Pages\CustomerPage\Home.aspx" />
     <Content Include="Pages\CustomerPage\Login.aspx" />
     <Content Include="Pages\CustomerPage\ProductDetails.aspx" />
@@ -211,9 +216,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\Admin.cs" />
     <Compile Include="Classes\Brand.cs" />
+    <Compile Include="Classes\Cart.cs" />
+    <Compile Include="Classes\CartItem.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\DataAdmin.cs" />
     <Compile Include="Classes\DataBrand.cs" />
+    <Compile Include="Classes\DataCart.cs" />
     <Compile Include="Classes\DataCustomer.cs" />
     <Compile Include="Classes\DataProduct.cs" />
     <Compile Include="Classes\Gender.cs" />
@@ -234,6 +242,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\AddProduct.aspx.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\AddProduct.aspx.designer.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminPage\AdminMaster.Master.cs">
       <DependentUpon>AdminMaster.Master</DependentUpon>
@@ -256,12 +271,40 @@
     <Compile Include="Pages\AdminPage\LoginAdmin.aspx.designer.cs">
       <DependentUpon>LoginAdmin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminPage\ManageProduct.aspx.cs">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\ManageProduct.aspx.designer.cs">
+      <DependentUpon>ManageProduct.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminPage\RegisterAdmin.aspx.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\AdminPage\RegisterAdmin.aspx.designer.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\UpdateProduct.aspx.cs">
+      <DependentUpon>UpdateProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\UpdateProduct.aspx.designer.cs">
+      <DependentUpon>UpdateProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CustomerPage\CartPage.aspx.cs">
+      <DependentUpon>CartPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CustomerPage\CartPage.aspx.designer.cs">
+      <DependentUpon>CartPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CustomerPage\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\CustomerPage\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\CustomerPage\CustomerMaster.Master.cs">
       <DependentUpon>CustomerMaster.Master</DependentUpon>
