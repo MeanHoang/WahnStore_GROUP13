@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -14,7 +15,7 @@ namespace WahnStore_GROUP13.Classes
         SqlConnection con;
         public DataProduct()
         {
-            string sqlcon = @"Data Source=DESKTOP-NGDEMD4\SQLEXPRESS;Initial Catalog=WahnStore;Integrated Security=True";
+            string sqlcon = @"Data Source=MCCOMPUTER\SQLEXPRESS01;Initial Catalog=WahnStore;Persist Security Info=True;User ID=sa;Password=123";
             con = new SqlConnection(sqlcon);
         }
 
@@ -156,6 +157,7 @@ namespace WahnStore_GROUP13.Classes
                     throw new Exception("Error saving image: " + ex.Message);
                 }
             }
+
             return null;
         }
 
@@ -236,5 +238,40 @@ namespace WahnStore_GROUP13.Classes
                 con.Close();
             }
         }
+        public string selectBrandName(int id)
+        {
+
+            string brandName = null;
+            con.Open();
+            string queryBrand = "select brand_name from Brands where brand_id=@id";
+            SqlCommand cmd = new SqlCommand(queryBrand, con);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                brandName = (string)rd["brand_name"];
+            }
+            con.Close();
+            return brandName;
+        }
+        public string selectGenderName(int id)
+        {
+
+            string genderName = null;
+            con.Open();
+            string queryGender = "select gender_name from Genders where gender_id =@id";
+            SqlCommand cmd = new SqlCommand(queryGender, con);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                genderName = (string)rd["gender_name"];
+            }
+            con.Close();
+            return genderName;
+        }
+
+        
+
     }
 }

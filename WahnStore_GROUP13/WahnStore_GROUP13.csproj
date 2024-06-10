@@ -100,6 +100,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Manage_Product\CapNhatProduct.aspx" />
+    <Content Include="Pages\AdminPage\AdminController.aspx" />
     <Content Include="Avatar\avatar1.jpg" />
     <Content Include="Avatar\linh.jfif" />
     <Content Include="Avatar\ngokienhuy.jpg" />
@@ -166,6 +168,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Pages\CustomerPage\CustomerMaster.Master" />
     <Content Include="Pages\AdminPage\AdminMaster.Master" />
+    <Content Include="Layout_Admin.Master" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -194,12 +197,28 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Manage_Product\ThemMoiProduct.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manage_Product\CapNhatProduct.aspx.cs">
+      <DependentUpon>CapNhatProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage_Product\CapNhatProduct.aspx.designer.cs">
+      <DependentUpon>CapNhatProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\DataGender.cs" />
+    <Compile Include="Pages\AdminPage\AdminController.aspx.cs">
+      <DependentUpon>AdminController.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\AdminController.aspx.designer.cs">
+      <DependentUpon>AdminController.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -234,6 +253,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Layout_Admin.Master.cs">
+      <DependentUpon>Layout_Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layout_Admin.Master.designer.cs">
+      <DependentUpon>Layout_Admin.Master</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminPage\AdminMaster.Master.cs">
       <DependentUpon>AdminMaster.Master</DependentUpon>
@@ -326,6 +352,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Manage_Product\ThemMoiProduct.aspx.cs">
+      <DependentUpon>ThemMoiProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Manage_Product\ThemMoiProduct.aspx.designer.cs">
+      <DependentUpon>ThemMoiProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
