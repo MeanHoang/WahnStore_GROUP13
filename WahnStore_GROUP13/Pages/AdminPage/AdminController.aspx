@@ -1,16 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout_Admin.Master" AutoEventWireup="true" CodeBehind="AdminController.aspx.cs" Inherits="WahnStore_GROUP13.AdminController" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        .btn {
-            padding: 5px 10px;
+        .btnThemMoi {
+            padding: 5px 25px;
             margin-bottom: 15px;
-            background-color:blue;
-            color:white;
+            background-color: green;
+            color: white;
         }
 
         .btn-edit {
-            background-color: green;
+            background-color:dodgerblue;
             color: white;
+            margin-bottom:10px;
         }
 
         .btn-delete {
@@ -18,23 +20,28 @@
             color: white;
         }
 
-        .btn-detail {
-            background-color: blue;
-            color: white;
+        .search{
+            width:500px;
+            
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Quản lý sản phẩm</h2>
-    <asp:Button ID="btnThemMoi" runat="server" Text="Thêm mới" CssClass="btn" PostBackUrl="~/Manage_Product/ThemMoiProduct.aspx" />
-    <asp:GridView ID="dsSanPham" runat="server" AutoGenerateColumns="false" OnRowDataBound="dsSanPham_RowDataBound" CssClass="table" >
+    <div class="input-group search mt-4 mx-auto">
+    <asp:TextBox ID="txtSearch" CssClass="form-control" runat="server" placeholder="Nhập từ khóa..."> </asp:TextBox>
+    <asp:Button ID="btnSearch" runat="server" Text="Tìm kiếm"  CssClass="btn btn-primary" OnClick="btnSearch_Click" />
+    
+</div>
+    <asp:Button ID="btnThemMoi" runat="server" Text="Thêm mới" CssClass="btnThemMoi" PostBackUrl="~/Manage_Product/ThemMoiProduct.aspx" />
+    <asp:GridView ID="dsSanPham" runat="server" AutoGenerateColumns="false" OnRowDataBound="dsSanPham_RowDataBound" CssClass="table" AllowPaging="true" PageSize="3" OnPageIndexChanging="GridView1_PageIndexChanging" >
         <Columns>
 
             <asp:BoundField DataField="ProductId" HeaderText="Mã sản phẩm" />
             <asp:BoundField DataField="ProductName" HeaderText="Tên sản phẩm" />
             <asp:TemplateField HeaderText="Hình ảnh">
                 <ItemTemplate>
-                    <img src='<%# "/ProductImg/" + Eval("ProductImage") %>'  width="100" height="100" />
+                    <img src='<%# "/ProductImg/" + Eval("ProductImage") %>' width="100" height="100" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="ProductPrice" HeaderText="Giá tiền" />
@@ -58,12 +65,13 @@
             </asp:TemplateField>
             <asp:BoundField DataField="ProductColor" HeaderText="Màu mặt số" />
             <asp:BoundField DataField="ProductStrap" HeaderText="Chất liệu dây" />
-            <asp:TemplateField >
+            <asp:TemplateField>
                 <ItemTemplate>
-                    <asp:Button ID="btnCapNhat" runat="server" Text="Cập nhật" CssClass="btn btn-delete" OnCommand="btnCapNhat_Click" CommandName="capNhat" CommandArgument='<%# Bind("ProductId") %>'  />
-                    <asp:Button ID="btnXoa" runat="server" Text="Xóa" CssClass="btn btn-delete" OnCommand="btnXoa_Click" CommandName="xoaSanPham" CommandArgument='<%# Bind("ProductId") %>'  />
+                    <asp:Button ID="btnCapNhat" runat="server" Text="Cập nhật" CssClass="btn btn-edit" OnCommand="btnCapNhat_Click" CommandName="capNhat" CommandArgument='<%# Bind("ProductId") %>' />
+                    <asp:Button ID="btnXoa" runat="server" Text="Xóa" CssClass="btn btn-delete" OnCommand="btnXoa_Click" CommandName="xoaSanPham" CommandArgument='<%# Bind("ProductId") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
+
 </asp:Content>

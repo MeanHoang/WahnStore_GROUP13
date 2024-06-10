@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,10 +18,19 @@ namespace WahnStore_GROUP13
             {
                 HienThi();
             }
+           
         }
         public void HienThi()
         {
-            dsSanPham.DataSource = data.dsProduct();
+            if (ViewState["searchResult"] != null && ViewState["searchResult"] is List<Product>)
+            {
+                List<Product> list = (List<Product>)ViewState["searchResult"];
+                dsSanPham.DataSource = list;
+            }
+            else
+            {
+                dsSanPham.DataSource = data.dsProduct();
+            }
             dsSanPham.DataBind();
         }
 
@@ -80,6 +90,37 @@ namespace WahnStore_GROUP13
             }
 
         }
+        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dsSanPham.PageIndex = e.NewPageIndex; // Thiết lập trang hiện tại của GridView
+            HienThi();
+            
+        }
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            string key = txtSearch.Text;
+            List<Product> products = data.dsProductBySearch(key);
+            if (products.Count >0)
+            {
+                dsSanPham.DataSource = data.dsProductBySearch(key);
+                
+                ViewState["searchResult"] = data.dsProductBySearch(key);
+                HienThi() ;
+            }
+            else
+            {
+                dsSanPham.DataSource = null; // Xóa dữ liệu hiển thị trước đó
+                dsSanPham.DataBind();
+            }
+        }
+        //protected void Search_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    dsSanPham.PageIndex = e.NewPageIndex; // Thiết lập trang hiện tại của GridView
+        //    dsSanPham.DataSource = ViewState["searchResult"];
+        //    dsSanPham.DataBind();
+
+        //}
+
 
     }
 }

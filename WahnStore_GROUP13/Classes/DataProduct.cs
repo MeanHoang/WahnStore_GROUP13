@@ -271,7 +271,40 @@ namespace WahnStore_GROUP13.Classes
             return genderName;
         }
 
-        
+        public List<Product> dsProductBySearch(string key)
+        {
+            List<Product> ds = new List<Product>();
+            string sql = "SELECT *FROM Products where product_name like @product_name";
+            con.Open();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("product_name", "%" + key + "%");
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                ds.Add(p);
+            }
+            con.Close();
+            List<Product> dsLop = ds;
+            return dsLop;
+        }
+
 
     }
 }

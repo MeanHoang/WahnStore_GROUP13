@@ -5,6 +5,7 @@ using System.Web;
 
 namespace WahnStore_GROUP13.Classes
 {
+    [Serializable]
     public class Product
     {
         public int ProductId { get; set; }

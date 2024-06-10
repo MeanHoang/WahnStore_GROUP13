@@ -12,7 +12,7 @@ namespace WahnStore_GROUP13.Classes
         SqlConnection con;
         public DataAdmin()
         {
-            string sqlcon = @"Data Source=DESKTOP-T4CBHBI\SQLEXPRESS;Initial Catalog=WahnStore;Integrated Security=True";
+            string sqlcon = @"Data Source=MCCOMPUTER\SQLEXPRESS01;Initial Catalog=WahnStore;Persist Security Info=True;User ID=sa;Password=123";
             con = new SqlConnection(sqlcon);
         }
 

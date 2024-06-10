@@ -41,15 +41,15 @@ namespace WahnStore_GROUP13
                 ddlGioiTinh.DataBind();
                 ddlGioiTinh.SelectedValue = product.GenderId.ToString();
                 ddlThuongHieu.SelectedValue = product.BrandId.ToString();
-                string urlImage ="/ProductImg/"+ product.ProductImage.ToString();
-                image.ImageUrl =urlImage;
-                
+                string urlImage = "/ProductImg/" + product.ProductImage.ToString();
+                image.ImageUrl = urlImage;
+
 
             }
         }
         protected void btnCapNhat_Click(object sender, EventArgs e)
         {
-            int productId =int.Parse( txtMaSanPham.Text);
+            int productId = int.Parse(txtMaSanPham.Text);
             string productName = txtTenSanPham.Text;
             string description = txtMoTa.Text;
             decimal price = decimal.Parse(txtGiaTien.Text);
@@ -58,7 +58,7 @@ namespace WahnStore_GROUP13
             decimal diameter = decimal.Parse(txtDuongKinh.Text);
             decimal thickness = decimal.Parse(txtBeDayMatSo.Text);
             string warrantyPeriod = txtBaoHiem.Text;
-       
+
             string fileAnh = null;
             if (fileHinhAnh.HasFile)
             {
@@ -67,9 +67,9 @@ namespace WahnStore_GROUP13
             else
             {
                 fileAnh = Path.GetFileName(image.ImageUrl);
-                
+
             }
- 
+
             int genderId = int.Parse(ddlGioiTinh.SelectedValue);
             string glass = txtLoaiKinh.Text;
             int brandId = int.Parse(ddlThuongHieu.SelectedValue);
@@ -80,5 +80,6 @@ namespace WahnStore_GROUP13
             dataProduct.UpdateProduct(product);
             Response.Redirect("~/Pages/AdminPage/AdminController.aspx");
         }
+       
     }
 }
