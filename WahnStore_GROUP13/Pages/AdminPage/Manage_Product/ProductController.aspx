@@ -1,6 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout_Admin.Master" AutoEventWireup="true" CodeBehind="AdminController.aspx.cs" Inherits="WahnStore_GROUP13.AdminController" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Layout_Admin.Master" AutoEventWireup="true" CodeBehind="ProductController.aspx.cs" Inherits="WahnStore_GROUP13.AdminController" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    
+
     <style>
         .btnThemMoi {
             padding: 5px 25px;
@@ -28,15 +30,16 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2>Quản lý sản phẩm</h2>
+    
     <div class="input-group search mt-4 mx-auto">
     <asp:TextBox ID="txtSearch" CssClass="form-control" runat="server" placeholder="Nhập từ khóa..."> </asp:TextBox>
     <asp:Button ID="btnSearch" runat="server" Text="Tìm kiếm"  CssClass="btn btn-primary" OnClick="btnSearch_Click" />
     
 </div>
-    <asp:Button ID="btnThemMoi" runat="server" Text="Thêm mới" CssClass="btnThemMoi" PostBackUrl="~/Manage_Product/ThemMoiProduct.aspx" />
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:Button ID="btnThemMoi" runat="server" Text="Thêm mới" CssClass="btnThemMoi" PostBackUrl="~/Pages/AdminPage/Manage_Product/ThemMoiProduct.aspx" />
     <asp:GridView ID="dsSanPham" runat="server" AutoGenerateColumns="false" OnRowDataBound="dsSanPham_RowDataBound" CssClass="table" AllowPaging="true" PageSize="3" OnPageIndexChanging="GridView1_PageIndexChanging" >
         <Columns>
-
             <asp:BoundField DataField="ProductId" HeaderText="Mã sản phẩm" />
             <asp:BoundField DataField="ProductName" HeaderText="Tên sản phẩm" />
             <asp:TemplateField HeaderText="Hình ảnh">
@@ -66,7 +69,7 @@
             <asp:BoundField DataField="ProductColor" HeaderText="Màu mặt số" />
             <asp:BoundField DataField="ProductStrap" HeaderText="Chất liệu dây" />
             <asp:TemplateField>
-                <ItemTemplate>
+                <ItemTemplate>                  
                     <asp:Button ID="btnCapNhat" runat="server" Text="Cập nhật" CssClass="btn btn-edit" OnCommand="btnCapNhat_Click" CommandName="capNhat" CommandArgument='<%# Bind("ProductId") %>' />
                     <asp:Button ID="btnXoa" runat="server" Text="Xóa" CssClass="btn btn-delete" OnCommand="btnXoa_Click" CommandName="xoaSanPham" CommandArgument='<%# Bind("ProductId") %>' />
                 </ItemTemplate>

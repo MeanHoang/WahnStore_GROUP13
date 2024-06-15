@@ -73,8 +73,18 @@ namespace WahnStore_GROUP13
             if(e.CommandName == "xoaSanPham")
             {
                 int productId = Convert.ToInt16(e.CommandArgument);
-                data.DeleteProduct(productId);
-                HienThi();
+                
+                Boolean boolean =  data.DeleteProduct(productId);
+                if(boolean == true)
+                {
+                    HienThi();
+                }
+                else
+                {
+                    string script = "alert('Không thể xóa được sản phẩm đang tồn tại trong đơn hàng!')";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "showError", script, true);
+                }
+               
             }
             
         }
@@ -85,7 +95,7 @@ namespace WahnStore_GROUP13
                 int productId = Convert.ToInt16(e.CommandArgument);
                 Product product =  data.GetProductById(productId);
                 Session["product"] =product;
-                Response.Redirect("~/Manage_Product/CapNhatProduct.aspx");
+                Response.Redirect("~/Pages/AdminPage/Manage_Product/CapNhatProduct.aspx");
                 HienThi();
             }
 

@@ -6,10 +6,11 @@
 <head runat="server">
     <title>WahnStore Shop</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin:-34px;
+            margin: -34px;
         }
 
         .sidebar {
@@ -18,34 +19,34 @@
             position: fixed;
             top: 52px;
             left: 0;
-            background-color: #343a40;
+            background-color: #2d4155;
             padding-top: 20px;
         }
 
-        .sidebar a {
+            .sidebar a {
                 padding: 10px 0px;
                 text-decoration: none;
                 font-size: 18px;
                 color: #ffffff;
                 display: block;
-                width:130px;
-                margin-left:30px;
-        }
+                width: 130px;
+                margin-left: 30px;
+            }
 
-        .sidebar a:hover {
-          background-color: #575d63;
-        }
+                .sidebar a:hover {
+                    background-color: #575d63;
+                }
 
         .content {
             margin-left: 210px;
             padding: 20px;
-            margin-top:40px;
+            margin-top: 40px;
         }
 
         .header {
             position: sticky;
             top: 0;
-            background-color:darkgreen;
+            background-color: darkgreen;
             padding: 10px 20px;
             color: white;
             font-size: 24px;
@@ -62,16 +63,34 @@
             Admin
         </div>
         <div class="sidebar">
-            <a href="AdminController.aspx">Sản phẩm</a>
-            <a href="#">Thương hiệu</a>
-            <a href="#">Người dùng</a>
-            <a href="#">Đơn hàng</a>
-            <a href="#">Thống kê</a>
-            <a href="LoginAdmin">Đăng xuất</a>
-
-            <%--            <div style="position: absolute; bottom: 20px; left: 15px; color: #ffffff;">
-                Logged in as: IctShop
-            </div>--%>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/HomeAdmin.aspx" CssClass="nav-link active mt-3 mb-3">
+            <i class="fas fa-home sidebar-icon"></i>
+            <span class="sidebar-text">Trang chủ</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/Author.aspx" CssClass="nav-link mb-3">
+            <i class="fas fa-user sidebar-icon"></i>
+            <span class="sidebar-text">Người dùng</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/Manage_Product/ProductController.aspx" CssClass="nav-link mb-3">
+            <i class= "fas fa-box sidebar-icon"></i>
+            <span class="sidebar-text">Sản phẩm</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/Manage_Brand/BrandController.aspx" CssClass="nav-link mb-3">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Thương hiệu</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/Orders.aspx" CssClass="nav-link mb-3">
+            <i class="fas fa-shopping-cart sidebar-icon"></i>
+            <span class="sidebar-text">Đơn hàng</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/ThongKe.aspx" CssClass="nav-link mb-5">
+            <i class="fas fa-file-alt sidebar-icon"></i>
+            <span class="sidebar-text">Thống kê</span>
+        </asp:LinkButton>
+            <asp:LinkButton runat="server" PostBackUrl="~/Pages/AdminPage/LoginAdmin.aspx" CssClass="nav-link mt-5">
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <span class="sidebar-text">Đăng xuất</span>
+        </asp:LinkButton>
         </div>
         <div class="content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

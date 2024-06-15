@@ -30,7 +30,7 @@ namespace WahnStore_GROUP13.Pages.AdminPage
             {
                 Session["Username"] = username;
                 // Chuyển hướng đến trang chính sau khi đăng nhập thành công
-                Response.Redirect("AdminController.aspx");
+                Response.Redirect("HomeAdmin.aspx");
             }
             else
             {

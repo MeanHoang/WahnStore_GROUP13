@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI.WebControls;
 
 namespace WahnStore_GROUP13.Classes
@@ -109,7 +110,7 @@ namespace WahnStore_GROUP13.Classes
                 command.Parameters.AddWithValue("@ProductDiameter", product.ProductDiameter);
                 command.Parameters.AddWithValue("@ProductThickness", product.ProductThickness);
                 command.Parameters.AddWithValue("@ProductWarrantyPeriod", product.ProductWarrantyPeriod);
-                command.Parameters.AddWithValue("@ProductImage", product.ProductImage);
+                command.Parameters.AddWithValue("@ProductImage",product.ProductImage == null ? "null" : product.ProductImage);
                 command.Parameters.AddWithValue("@GenderId", product.GenderId);
                 command.Parameters.AddWithValue("@ProductGlass", product.ProductGlass);
                 command.Parameters.AddWithValue("@BrandId", product.BrandId);
@@ -175,13 +176,14 @@ namespace WahnStore_GROUP13.Classes
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
-                throw new Exception("Error deleting product: " + ex.Message);
+                return false;
+               
             }
             finally
             {
                 con.Close();
             }
+            
         }
 
         public bool UpdateProduct(Product product)
@@ -304,7 +306,73 @@ namespace WahnStore_GROUP13.Classes
             List<Product> dsLop = ds;
             return dsLop;
         }
-
+        public List<Product> selectTop5BestSellingProduct()
+        {
+            List<Product> ds = new List<Product>();
+            con.Open();
+            string sql = "select top 6 *from Products p " +
+                "join(select product_id,sum(orderdetail_quantity) as total_quantity " +
+                "from OrderDetails group by product_id " +
+                "having sum(orderdetail_quantity) > 0) o on p.product_id = o.product_id " +
+                "order by total_quantity desc";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                ds.Add(p);
+            }
+            con.Close();
+            return ds;
+        }
+        public List<Product> selectTop5ProductCanNotBeSold()
+        {
+            List<Product> ds = new List<Product>();
+            con.Open();
+            string sql = "select top 6 *from Products p left join OrderDetails o on p.product_id = o.product_id where o.product_id is null";
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                ds.Add(p);
+            }
+            con.Close();
+            return ds;
+        }
 
     }
+
 }

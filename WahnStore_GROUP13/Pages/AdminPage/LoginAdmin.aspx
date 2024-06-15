@@ -10,7 +10,8 @@
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            color:#333;
         }
 
         .login-container {

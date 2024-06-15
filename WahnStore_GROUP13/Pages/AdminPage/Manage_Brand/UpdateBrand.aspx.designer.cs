@@ -11,43 +11,43 @@ namespace WahnStore_GROUP13
 {
 
 
-    public partial class AdminController
+    public partial class UpdateBrand
     {
 
         /// <summary>
-        /// txtSearch control.
+        /// txtMaThuongHieu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearch;
+        protected global::System.Web.UI.WebControls.TextBox txtMaThuongHieu;
 
         /// <summary>
-        /// btnSearch control.
+        /// txtTenThuongHieu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.TextBox txtTenThuongHieu;
 
         /// <summary>
-        /// btnThemMoi control.
+        /// txtMoTa control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnThemMoi;
+        protected global::System.Web.UI.WebControls.TextBox txtMoTa;
 
         /// <summary>
-        /// dsSanPham control.
+        /// btnCapNhat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dsSanPham;
+        protected global::System.Web.UI.WebControls.Button btnCapNhat;
     }
 }

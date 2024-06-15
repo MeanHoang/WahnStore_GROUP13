@@ -100,8 +100,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Manage_Product\CapNhatProduct.aspx" />
-    <Content Include="Pages\AdminPage\AdminController.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Order\manageOrder.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Order\orderDetails.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Order\OrderSatistic.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Brand\AddBrand.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Brand\BrandController.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Product\ChiTietSanPham.aspx" />
+    <Content Include="Pages\AdminPage\HomeAdmin.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Product\CapNhatProduct.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Product\ProductController.aspx" />
     <Content Include="Avatar\avatar1.jpg" />
     <Content Include="Avatar\linh.jfif" />
     <Content Include="Avatar\ngokienhuy.jpg" />
@@ -138,6 +145,8 @@
     <Content Include="ProductImg\rolex1.jpg" />
     <Content Include="ProductImg\tissot1.jpg" />
     <Content Include="ProductImg\wall.jpg" />
+    <Content Include="Pages\AdminPage\Manage_Product\SanPhamBanChay.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Product\SanPhamKhongBanDuoc.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -197,27 +206,81 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
-    <Content Include="Manage_Product\ThemMoiProduct.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Product\ThemMoiProduct.aspx" />
+    <Content Include="Pages\AdminPage\ThongKe.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Brand\UpdateBrand.aspx" />
+    <Content Include="Pages\AdminPage\Manage_Order\updateOrder.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manage_Product\CapNhatProduct.aspx.cs">
+    <Compile Include="Classes\DataOrder.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Pages\AdminPage\Manage_Order\manageOrder.aspx.cs">
+      <DependentUpon>manageOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\manageOrder.aspx.designer.cs">
+      <DependentUpon>manageOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\orderDetails.aspx.cs">
+      <DependentUpon>orderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\orderDetails.aspx.designer.cs">
+      <DependentUpon>orderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\OrderSatistic.aspx.cs">
+      <DependentUpon>OrderSatistic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\OrderSatistic.aspx.designer.cs">
+      <DependentUpon>OrderSatistic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\AddBrand.aspx.cs">
+      <DependentUpon>AddBrand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\AddBrand.aspx.designer.cs">
+      <DependentUpon>AddBrand.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\BrandController.aspx.cs">
+      <DependentUpon>BrandController.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\BrandController.aspx.designer.cs">
+      <DependentUpon>BrandController.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\ChiTietSanPham.aspx.cs">
+      <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\ChiTietSanPham.aspx.designer.cs">
+      <DependentUpon>ChiTietSanPham.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\HomeAdmin.aspx.cs">
+      <DependentUpon>HomeAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\HomeAdmin.aspx.designer.cs">
+      <DependentUpon>HomeAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\CapNhatProduct.aspx.cs">
       <DependentUpon>CapNhatProduct.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Manage_Product\CapNhatProduct.aspx.designer.cs">
+    <Compile Include="Pages\AdminPage\Manage_Product\CapNhatProduct.aspx.designer.cs">
       <DependentUpon>CapNhatProduct.aspx</DependentUpon>
     </Compile>
     <Compile Include="Classes\DataGender.cs" />
-    <Compile Include="Pages\AdminPage\AdminController.aspx.cs">
-      <DependentUpon>AdminController.aspx</DependentUpon>
+    <Compile Include="Pages\AdminPage\Manage_Product\ProductController.aspx.cs">
+      <DependentUpon>ProductController.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\AdminPage\AdminController.aspx.designer.cs">
-      <DependentUpon>AdminController.aspx</DependentUpon>
+    <Compile Include="Pages\AdminPage\Manage_Product\ProductController.aspx.designer.cs">
+      <DependentUpon>ProductController.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -339,6 +402,20 @@
       <DependentUpon>ManageAccount.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pages\AdminPage\Manage_Product\SanPhamBanChay.aspx.cs">
+      <DependentUpon>SanPhamBanChay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\SanPhamBanChay.aspx.designer.cs">
+      <DependentUpon>SanPhamBanChay.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\SanPhamKhongBanDuoc.aspx.cs">
+      <DependentUpon>SanPhamKhongBanDuoc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Product\SanPhamKhongBanDuoc.aspx.designer.cs">
+      <DependentUpon>SanPhamKhongBanDuoc.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -353,12 +430,33 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Manage_Product\ThemMoiProduct.aspx.cs">
+    <Compile Include="Pages\AdminPage\Manage_Product\ThemMoiProduct.aspx.cs">
       <DependentUpon>ThemMoiProduct.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Manage_Product\ThemMoiProduct.aspx.designer.cs">
+    <Compile Include="Pages\AdminPage\Manage_Product\ThemMoiProduct.aspx.designer.cs">
       <DependentUpon>ThemMoiProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\ThongKe.aspx.cs">
+      <DependentUpon>ThongKe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\ThongKe.aspx.designer.cs">
+      <DependentUpon>ThongKe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\UpdateBrand.aspx.cs">
+      <DependentUpon>UpdateBrand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Brand\UpdateBrand.aspx.designer.cs">
+      <DependentUpon>UpdateBrand.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\updateOrder.aspx.cs">
+      <DependentUpon>updateOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\AdminPage\Manage_Order\updateOrder.aspx.designer.cs">
+      <DependentUpon>updateOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

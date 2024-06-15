@@ -78,7 +78,7 @@ namespace WahnStore_GROUP13
             DateTime createdDate = DateTime.Now;
             Product product = new Product(productId, productName, description, price, quantity, origin, diameter, thickness, warrantyPeriod, fileAnh, genderId, glass, brandId, Color, strap, createdDate);
             dataProduct.UpdateProduct(product);
-            Response.Redirect("~/Pages/AdminPage/AdminController.aspx");
+            Response.Redirect("~/Pages/AdminPage/Manage_Product/ProductController.aspx");
         }
        
     }
