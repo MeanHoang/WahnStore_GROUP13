@@ -11,5 +11,10 @@ namespace WahnStore_GROUP13.Classes
         public string GenderName { get; set; }
 
         public Gender() { }
+        public Gender(int genderId, string genderName)
+        {
+            this.GenderId = genderId;
+            this.GenderName = genderName;
+        }
     }
 }

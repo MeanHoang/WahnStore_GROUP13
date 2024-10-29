@@ -43,21 +43,22 @@ namespace WahnStore_GROUP13.Classes
             while (rd.Read())
             {
                 Customer c = new Customer();
-                c.CustomerID = (int)rd["customer_id"];
-                c.FullName = (string)rd["customer_fullname"];
-                c.Email = (string)rd["customer_email"];
-                c.Phone = (string)rd["customer_phone"];
-                c.Username = (string)rd["customer_username"];
-                c.Password = (string)rd["customer_password"];
-                c.Address = (string)rd["customer_address"];
-                c.GenderId = (int)rd["gender_id"];
-                c.Avatar = (string)rd["customer_avata"];
-                c.CreatedDate = (DateTime)rd["customer_createddate"];
+                c.CustomerID = rd["customer_id"] != DBNull.Value ? (int)rd["customer_id"] : 0; // Handle null value for customer_id
+                c.FullName = rd["customer_fullname"] != DBNull.Value ? (string)rd["customer_fullname"] : string.Empty; // Handle null value for customer_fullname
+                c.Email = rd["customer_email"] != DBNull.Value ? (string)rd["customer_email"] : string.Empty; // Handle null value for customer_email
+                c.Phone = rd["customer_phone"] != DBNull.Value ? (string)rd["customer_phone"] : string.Empty; // Handle null value for customer_phone
+                c.Username = rd["customer_username"] != DBNull.Value ? (string)rd["customer_username"] : string.Empty; // Handle null value for customer_username
+                c.Password = rd["customer_password"] != DBNull.Value ? (string)rd["customer_password"] : string.Empty; // Handle null value for customer_password
+                c.Address = rd["customer_address"] != DBNull.Value ? (string)rd["customer_address"] : string.Empty; // Handle null value for customer_address
+                c.GenderId = rd["gender_id"] != DBNull.Value ? (int)rd["gender_id"] : 0; // Handle null value for gender_id
+                c.Avatar = rd["customer_avatar"] != DBNull.Value ? (string)rd["customer_avatar"] : string.Empty; // Handle null value for customer_avatar
+                c.CreatedDate = rd["customer_createddate"] != DBNull.Value ? (DateTime)rd["customer_createddate"] : DateTime.MinValue; // Handle null value for customer_createddate
                 ds.Add(c);
             }
             con.Close();
             return ds;
         }
+
 
         public bool AuthenticateUser(string username, string password)
         {
@@ -242,5 +243,98 @@ namespace WahnStore_GROUP13.Classes
 
             return genderName;
         }
+
+        public bool UpdateCustomer(Customer customer)
+        {
+            string sql = @"UPDATE Customers 
+                            SET customer_fullname = @FullName, 
+                                customer_email = @Email, 
+                                customer_phone = @Phone, 
+                                customer_address = @Address, 
+                                gender_id = @GenderId, 
+                                customer_avatar = @Avatar 
+                            WHERE customer_id = @CustomerId";
+
+            using (SqlCommand cmd = new SqlCommand(sql, con))
+            {
+                cmd.Parameters.AddWithValue("@FullName", customer.FullName);
+                cmd.Parameters.AddWithValue("@Email", customer.Email);
+                cmd.Parameters.AddWithValue("@Phone", customer.Phone);
+                cmd.Parameters.AddWithValue("@Address", customer.Address);
+                cmd.Parameters.AddWithValue("@GenderId", customer.GenderId);
+                cmd.Parameters.AddWithValue("@Avatar", (object)customer.Avatar ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@CustomerId", customer.CustomerID);
+
+                try
+                {
+                    con.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+                catch (SqlException ex)
+                {
+                    // Xử lý lỗi SQL hoặc ngoại lệ khác
+                    Console.WriteLine("Error: " + ex.Message);
+                    return false;
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+        public Customer GetCustomerById(int customer_id)
+        {
+            Customer cus = null;
+            {
+                con.Open();
+                string query = "SELECT * FROM Customers WHERE customer_id = @customer_id";
+                SqlCommand command = new SqlCommand(query, con);
+                command.Parameters.AddWithValue("@customer_id", customer_id);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    cus = new Customer
+                    {
+                        CustomerID = Convert.ToInt32(reader["customer_id"]),
+                        FullName = reader["customer_fullname"].ToString(),
+                        Email = reader["customer_email"].ToString(),
+                        Phone = reader["customer_phone"].ToString(),
+                        Username = reader["customer_username"].ToString(),
+                        Password = reader["customer_password"].ToString(),
+                        GenderId = Convert.ToInt32(reader["customer_id"]),
+                        Address = reader["customer_address"].ToString(),
+                        Avatar = reader["customer_avatar"].ToString(),
+                        CreatedDate = Convert.ToDateTime(reader["customer_createddate"])
+                    };
+                }
+            }
+            return cus;
+        }
+
+        public bool DeleteCustomer(int CustomerId)
+        {
+            try
+            {
+                con.Open();
+                string query = "DELETE FROM Customers WHERE customer_id = @customer_id";
+                SqlCommand command = new SqlCommand(query, con);
+                command.Parameters.AddWithValue("@customer_id", CustomerId);
+
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw new Exception("Error deleting Customer: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
     }
 }

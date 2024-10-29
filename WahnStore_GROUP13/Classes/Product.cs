@@ -5,6 +5,7 @@ using System.Web;
 
 namespace WahnStore_GROUP13.Classes
 {
+    [Serializable]
     public class Product
     {
         public int ProductId { get; set; }
@@ -28,5 +29,44 @@ namespace WahnStore_GROUP13.Classes
         {
 
         }
+        public Product(string productName, string productDescription, decimal productPrice, int productQuantity, string productOrigin, decimal productDiameter, decimal productThickness, string productWarrantyPeriod, string productImage, int genderId, string productGlass, int brandId, string productColor, string productStrap, DateTime productCreatedDate)
+        {
+
+            ProductName = productName;
+            ProductDescription = productDescription;
+            ProductPrice = productPrice;
+            ProductQuantity = productQuantity;
+            ProductOrigin = productOrigin;
+            ProductDiameter = productDiameter;
+            ProductThickness = productThickness;
+            ProductWarrantyPeriod = productWarrantyPeriod;
+            ProductImage = productImage;
+            GenderId = genderId;
+            ProductGlass = productGlass;
+            BrandId = brandId;
+            ProductColor = productColor;
+            ProductStrap = productStrap;
+            ProductCreatedDate = productCreatedDate;
+        }
+        public Product(int productId, string productName, string productDescription, decimal productPrice, int productQuantity, string productOrigin, decimal productDiameter, decimal productThickness, string productWarrantyPeriod, string productImage, int genderId, string productGlass, int brandId, string productColor, string productStrap, DateTime productCreatedDate)
+        {
+            ProductId = productId;
+            ProductName = productName;
+            ProductDescription = productDescription;
+            ProductPrice = productPrice;
+            ProductQuantity = productQuantity;
+            ProductOrigin = productOrigin;
+            ProductDiameter = productDiameter;
+            ProductThickness = productThickness;
+            ProductWarrantyPeriod = productWarrantyPeriod;
+            ProductImage = productImage;
+            GenderId = genderId;
+            ProductGlass = productGlass;
+            BrandId = brandId;
+            ProductColor = productColor;
+            ProductStrap = productStrap;
+            ProductCreatedDate = productCreatedDate;
+        }
     }
 }
+    

@@ -1,129 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WahnStore_GROUP13.Classes;
 
+
 namespace WahnStore_GROUP13.Pages.AdminPage
 {
     public partial class UpdateProduct : System.Web.UI.Page
     {
-        DataBrand data1 = new DataBrand();
+        DataBrand dataBrand = new DataBrand();
+        DataGender dataGender = new DataGender();
         DataProduct dataProduct = new DataProduct();
-        DataCustomer customer = new DataCustomer();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Hiển thị dữ liệu sản phẩm cần cập nhật
-                int productId = Convert.ToInt32(Request.QueryString["productId"]);
-                LoadProductDetails(productId);
+                Product product = (Product)Session["product"];
+                txtMaSanPham.Text = product.ProductId.ToString();
+                txtTenSanPham.Text = product.ProductName;
+                txtMoTa.Text = product.ProductDescription;
+                txtGiaTien.Text = product.ProductPrice.ToString();
+                txtSoLuong.Text = product.ProductQuantity.ToString();
+                txtXuatXu.Text = product.ProductOrigin;
+                txtDuongKinh.Text = product.ProductDiameter.ToString();
+                txtBeDayMatSo.Text = product.ProductThickness.ToString();
+                txtBaoHiem.Text = product.ProductWarrantyPeriod;
+                txtLoaiKinh.Text = product.ProductGlass;
+                txtMauMatSo.Text = product.ProductColor;
+                txtChatLieuDay.Text = product.ProductStrap;
+                ddlThuongHieu.DataSource = dataBrand.dsBrand();
+                ddlThuongHieu.DataTextField = "BrandName";
+                ddlThuongHieu.DataValueField = "BrandId";
+                ddlThuongHieu.DataBind();
+                ddlGioiTinh.DataSource = dataGender.DsGender();
+                ddlGioiTinh.DataTextField = "GenderName";
+                ddlGioiTinh.DataValueField = "GenderId";
+                ddlGioiTinh.DataBind();
+                ddlGioiTinh.SelectedValue = product.GenderId.ToString();
+                ddlThuongHieu.SelectedValue = product.BrandId.ToString();
+                string urlImage = "/ProductImg/" + product.ProductImage.ToString();
+                image.ImageUrl = urlImage;
 
-                // Hiển thị danh sách thương hiệu và giới tính
-                HienThiDrop();
+
             }
         }
-
-        private void LoadProductDetails(int productId)
+        protected void btnCapNhat_Click(object sender, EventArgs e)
         {
-            Product product = dataProduct.GetProductById(productId);
-            if (product != null)
+            int productId = int.Parse(txtMaSanPham.Text);
+            string productName = txtTenSanPham.Text;
+            string description = txtMoTa.Text;
+            decimal price = decimal.Parse(txtGiaTien.Text);
+            int quantity = int.Parse(txtSoLuong.Text);
+            string origin = txtXuatXu.Text;
+            decimal diameter = decimal.Parse(txtDuongKinh.Text);
+            decimal thickness = decimal.Parse(txtBeDayMatSo.Text);
+            string warrantyPeriod = txtBaoHiem.Text;
+
+            string fileAnh = null;
+            if (fileHinhAnh.HasFile)
             {
-                txtproductname.Text = product.ProductName;
-                txtdes.Text = product.ProductDescription;
-                txtprice.Text = product.ProductPrice.ToString();
-                txtquantity.Text = product.ProductQuantity.ToString();
-                txtorigin.Text = product.ProductOrigin;
-                txtdiameter.Text = product.ProductDiameter.ToString();
-                txtthickness.Text = product.ProductThickness.ToString();
-                txtwarrantyperiod.Text = product.ProductWarrantyPeriod;
-                txtglass.Text = product.ProductGlass;
-                txtcolor.Text = product.ProductColor;
-                txtstrap.Text = product.ProductStrap;
+                fileAnh = dataProduct.SaveAvatar(fileHinhAnh, HttpContext.Current);
             }
+            else
+            {
+                fileAnh = Path.GetFileName(image.ImageUrl);
+
+            }
+
+            int genderId = int.Parse(ddlGioiTinh.SelectedValue);
+            string glass = txtLoaiKinh.Text;
+            int brandId = int.Parse(ddlThuongHieu.SelectedValue);
+            string Color = txtMauMatSo.Text;
+            string strap = txtChatLieuDay.Text;
+            DateTime createdDate = DateTime.Now;
+            Product product = new Product(productId, productName, description, price, quantity, origin, diameter, thickness, warrantyPeriod, fileAnh, genderId, glass, brandId, Color, strap, createdDate);
+            dataProduct.UpdateProduct(product);
+            Response.Redirect("~/Pages/AdminPage/ManageProduct.aspx");
         }
 
-        private void HienThiDrop()
-        {
-            // Hiển thị danh sách thương hiệu
-            ddbrand.DataSource = data1.dsBrand();
-            ddbrand.DataTextField = "BrandName";
-            ddbrand.DataValueField = "BrandId";
-            ddbrand.DataBind();
-
-            // Hiển thị danh sách giới tính
-            ddgender.DataSource = customer.dsGender();
-            ddgender.DataTextField = "GenderName";
-            ddgender.DataValueField = "GenderId";
-            ddgender.DataBind();
-        }
-
-        protected void btnUpdate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Request.QueryString["productId"] != null)
-                {
-                    int productId = Convert.ToInt32(Request.QueryString["productId"]);
-                    string productName = txtproductname.Text.Trim();
-                    string productDescription = txtdes.Text.Trim();
-                    decimal productPrice = decimal.Parse(txtprice.Text.Trim());
-                    int productQuantity = int.Parse(txtquantity.Text.Trim());
-                    string productOrigin = txtorigin.Text.Trim();
-                    decimal productDiameter = decimal.Parse(txtdiameter.Text.Trim());
-                    decimal productThickness = decimal.Parse(txtthickness.Text.Trim());
-                    string productWarrantyPeriod = txtwarrantyperiod.Text.Trim();
-                    string productGlass = txtglass.Text.Trim();
-                    int genderId = int.Parse(ddgender.SelectedValue);
-                    int brandId = int.Parse(ddbrand.SelectedValue);
-                    string productColor = txtcolor.Text.Trim();
-                    string productStrap = txtstrap.Text.Trim();
-
-                    // Handle file upload for product image
-                    string productImage = dataProduct.SaveAvatar(fuAvatar, HttpContext.Current);
-
-                    Product updatedProduct = new Product
-                    {
-                        ProductId = productId,
-                        ProductName = productName,
-                        ProductDescription = productDescription,
-                        ProductPrice = productPrice,
-                        ProductQuantity = productQuantity,
-                        ProductOrigin = productOrigin,
-                        ProductDiameter = productDiameter,
-                        ProductThickness = productThickness,
-                        ProductWarrantyPeriod = productWarrantyPeriod,
-                        ProductImage = productImage,
-                        GenderId = genderId,
-                        ProductGlass = productGlass,
-                        BrandId = brandId,
-                        ProductColor = productColor,
-                        ProductStrap = productStrap,
-                        ProductCreatedDate = DateTime.Now // You may choose not to update the creation date
-                    };
-
-                    bool isUpdated = dataProduct.UpdateProduct(updatedProduct);
-
-                    if (isUpdated)
-                    {
-                        // Display success message
-                        Response.Redirect("ManageProduct.aspx");
-                        Response.Write("<script>alert('Product updated successfully.');</script>");
-                    }
-                    else
-                    {
-                        // Display failure message
-                        Response.Write("<script>alert('Failed to update product.');</script>");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Display error message
-                Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
-            }
-        }
     }
+
 }

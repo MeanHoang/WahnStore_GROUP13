@@ -10,90 +10,53 @@ namespace WahnStore_GROUP13.Pages.AdminPage
 {
     public partial class AddProduct : System.Web.UI.Page
     {
-        DataBrand data1 = new DataBrand();
-        DataCustomer data2 = new DataCustomer();
+        DataGender dataGender = new DataGender();
+        DataBrand dataBrand = new DataBrand();
+        DataProduct dataProduct = new DataProduct();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            HienThiDrop();
+            if (!IsPostBack)
+            {
+                hienThiGioiTinh();
+                hienThiThuongHieu();
+            }
+        }
+        public void hienThiGioiTinh()
+        {
+            ddlGioiTinh.DataSource = dataGender.DsGender();
+            ddlGioiTinh.DataTextField = "GenderName";
+            ddlGioiTinh.DataValueField = "GenderId";
+            ddlGioiTinh.DataBind();
+        }
+        public void hienThiThuongHieu()
+        {
+            ddlThuongHieu.DataSource = dataBrand.dsBrand();
+            ddlThuongHieu.DataTextField = "BrandName";
+            ddlThuongHieu.DataValueField = "BrandId";
+            ddlThuongHieu.DataBind();
         }
 
-        private void HienThiDrop()
+        protected void btnThemMoi_Click(object sender, EventArgs e)
         {
-            List<Brand> brands = data1.dsBrand();
-
-            ddbrand.DataSource = brands;
-            ddbrand.DataTextField = "BrandName";
-            ddbrand.DataValueField = "BrandId";
-            ddbrand.DataBind();
-
-            List<Gender> gender = data2.dsGender();
-
-            ddgender.DataSource = gender;
-            ddgender.DataTextField = "GenderName";
-            ddgender.DataValueField = "GenderId";
-            ddgender.DataBind();
-        }
-
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string productName = txtproductname.Text.Trim();
-                string productDescription = txtdes.Text.Trim();
-                decimal productPrice = decimal.Parse(txtprice.Text.Trim());
-                int productQuantity = int.Parse(txtquantity.Text.Trim());
-                string productOrigin = txtorigin.Text.Trim();
-                decimal productDiameter = decimal.Parse(txtdiameter.Text.Trim());
-                decimal productThickness = decimal.Parse(txtthickness.Text.Trim());
-                string productWarrantyPeriod = txtwarrantyperiod.Text.Trim();
-                string productGlass = txtglass.Text.Trim();
-                int genderId = int.Parse(ddgender.SelectedValue);
-                int brandId = int.Parse(ddbrand.SelectedValue);
-                string productColor = txtcolor.Text.Trim();
-                string productStrap = txtstrap.Text.Trim();
-                DateTime productCreatedDate = DateTime.Now;
-
-                // Handle file upload for product image
-                DataProduct dataProduct = new DataProduct();
-                string productImage = dataProduct.SaveAvatar(fuAvatar, HttpContext.Current);
-
-                Product newProduct = new Product
-                {
-                    ProductName = productName,
-                    ProductDescription = productDescription,
-                    ProductPrice = productPrice,
-                    ProductQuantity = productQuantity,
-                    ProductOrigin = productOrigin,
-                    ProductDiameter = productDiameter,
-                    ProductThickness = productThickness,
-                    ProductWarrantyPeriod = productWarrantyPeriod,
-                    ProductImage = productImage,
-                    GenderId = genderId,
-                    ProductGlass = productGlass,
-                    BrandId = brandId,
-                    ProductColor = productColor,
-                    ProductStrap = productStrap,
-                    ProductCreatedDate = productCreatedDate
-                };
-
-                bool isAdded = dataProduct.AddProduct(newProduct);
-
-                if (isAdded)
-                {
-                    // Display success message
-                    Response.Write("<script>alert('Product added successfully.');</script>");
-                }
-                else
-                {
-                    // Display failure message
-                    Response.Write("<script>alert('Failed to add product.');</script>");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Display error message
-                Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
-            }
+            string productName = txtTenSanPham.Text;
+            string description = txtMoTa.Text;
+            decimal price = decimal.Parse(txtGiaTien.Text);
+            int quantity = int.Parse(txtSoLuong.Text);
+            string origin = txtXuatXu.Text;
+            decimal diameter = decimal.Parse(txtDuongKinh.Text);
+            decimal thickness = decimal.Parse(txtBeDayMatSo.Text);
+            string warrantyPeriod = txtBaoHiem.Text;
+            string image = dataProduct.SaveAvatar(fileHinhAnh, HttpContext.Current);
+            int genderId = int.Parse(ddlGioiTinh.SelectedValue);
+            string glass = txtLoaiKinh.Text;
+            int brandId = int.Parse(ddlThuongHieu.SelectedValue);
+            string Color = txtMauMatSo.Text;
+            string strap = txtChatLieuDay.Text;
+            DateTime createdDate = DateTime.Now;
+            Product product = new Product(productName, description, price, quantity, origin, diameter, thickness, warrantyPeriod, image, genderId, glass, brandId, Color, strap, createdDate);
+            dataProduct.AddProduct(product);
+            Response.Redirect("~/Pages/AdminPage/ManageProduct.aspx");
         }
     }
 }

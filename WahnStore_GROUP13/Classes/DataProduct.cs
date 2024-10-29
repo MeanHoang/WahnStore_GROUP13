@@ -1,10 +1,13 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using WahnStore_GROUP13.Pages.CustomerPage;
 
 namespace WahnStore_GROUP13.Classes
 {
@@ -81,6 +84,7 @@ namespace WahnStore_GROUP13.Classes
                         ProductCreatedDate = Convert.ToDateTime(reader["product_createddate"])
                     };
                 }
+                con.Close();
             }
             return product;
         }
@@ -236,5 +240,334 @@ namespace WahnStore_GROUP13.Classes
                 con.Close();
             }
         }
+
+        public List<Product> GetProductsByGenderName(string genderName)
+        {
+            List<Product> products = new List<Product>();
+            try
+            {
+                con.Open();
+                string query = @"SELECT p.* FROM Products p
+                                 JOIN Genders g ON p.gender_id = g.gender_id
+                                 WHERE g.gender_name = @GenderName";
+
+                SqlCommand command = new SqlCommand(query, con);
+                command.Parameters.AddWithValue("@GenderName", genderName);
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Product product = new Product
+                    {
+                        ProductId = Convert.ToInt32(reader["product_id"]),
+                        ProductName = reader["product_name"].ToString(),
+                        ProductDescription = reader["product_des"].ToString(),
+                        ProductPrice = Convert.ToDecimal(reader["product_price"]),
+                        ProductQuantity = Convert.ToInt32(reader["product_quantity"]),
+                        ProductOrigin = reader["product_origin"].ToString(),
+                        ProductDiameter = Convert.ToDecimal(reader["product_diameter"]),
+                        ProductThickness = Convert.ToDecimal(reader["product_thickness"]),
+                        ProductWarrantyPeriod = reader["product_warrantyperiod"].ToString(),
+                        ProductImage = reader["product_image"].ToString(),
+                        BrandId = Convert.ToInt32(reader["brand_id"]),
+                        GenderId = Convert.ToInt32(reader["gender_id"]),
+                        ProductGlass = reader["product_glass"].ToString(),
+                        ProductColor = reader["product_color"].ToString(),
+                        ProductStrap = reader["product_strap"].ToString(),
+                        ProductCreatedDate = Convert.ToDateTime(reader["product_createddate"])
+                    };
+                    products.Add(product);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw new Exception("Error retrieving products by gender name: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+            return products;
+        }
+
+        public List<Product> GetProductsByBrand(int brandId)
+        {
+            List<Product> products = new List<Product>();
+            string sql = "SELECT * FROM Products WHERE brand_id = @brandId";
+            con.Open();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@brandId", brandId);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                products.Add(p);
+            }
+            con.Close();
+            return products;
+        }
+
+        public List<Product> SearchProductsByName(string productName)
+        {
+            List<Product> products = new List<Product>();
+            string sql = "SELECT * FROM Products WHERE product_name LIKE @productName";
+                con.Open();
+                SqlCommand cmd = new SqlCommand(sql, con);
+                cmd.Parameters.AddWithValue("@productName", "%" + productName + "%");
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    Product p = new Product();
+                    p.ProductId = (int)rd["product_id"];
+                    p.ProductName = (string)rd["product_name"];
+                    p.ProductDescription = (string)rd["product_des"];
+                    p.ProductPrice = (decimal)rd["product_price"];
+                    p.ProductQuantity = (int)rd["product_quantity"];
+                    p.ProductOrigin = (string)rd["product_origin"];
+                    p.ProductDiameter = (decimal)rd["product_diameter"];
+                    p.ProductThickness = (decimal)rd["product_thickness"];
+                    p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                    p.ProductImage = (string)rd["product_image"];
+                    p.GenderId = (int)rd["gender_id"];
+                    p.ProductGlass = (string)rd["product_glass"];
+                    p.BrandId = (int)rd["brand_id"];
+                    p.ProductColor = (string)rd["product_color"];
+                    p.ProductStrap = (string)rd["product_strap"];
+                    p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                    products.Add(p);
+                }
+            
+            return products;
+        }
+
+
+        public List<Product> GetProductsByPriceRange(decimal minPrice, decimal maxPrice)
+        {
+            List<Product> products = new List<Product>();
+            string sql = "SELECT * FROM Products WHERE product_price BETWEEN @minPrice AND @maxPrice";
+            con.Open();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("@minPrice", minPrice);
+            cmd.Parameters.AddWithValue("@maxPrice", maxPrice);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                products.Add(p);
+            }
+            con.Close();
+            return products;
+        }
+
+        public List<Product> GetTop5BestSellingProducts()
+        {
+            List<Product> products = new List<Product>();
+            try
+            {
+                con.Open();
+                string query = @"
+            SELECT TOP 5 p.product_id, p.product_name, p.product_price, p.product_image
+            FROM Products p
+            JOIN OrderItem oi ON p.product_id = oi.product_id
+            JOIN Orders o ON oi.order_id = o.order_id
+            GROUP BY p.product_id, p.product_name, p.product_price, p.product_image
+            ORDER BY SUM(oi.quantity) DESC;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product p = new Product
+                    {
+                        ProductId = Convert.ToInt32(reader["product_id"]),
+                        ProductName = reader["product_name"].ToString(),
+                        ProductPrice = Convert.ToDecimal(reader["product_price"]),
+                        ProductImage = reader["product_image"].ToString()
+                    };
+                    products.Add(p);
+                }
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving top 4 best-selling products: " + ex.Message);
+            }
+
+            return products;
+        }
+
+        public List<Product> GetTop4LatestProducts()
+        {
+            List<Product> products = new List<Product>();
+            try
+            {
+                con.Open();
+                string query = "SELECT TOP 4 product_id, product_name, product_price, product_image FROM Products ORDER BY product_createddate DESC;";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Product p = new Product
+                    {
+                        ProductId = Convert.ToInt32(reader["product_id"]),
+                        ProductName = reader["product_name"].ToString(),
+                        ProductPrice = Convert.ToDecimal(reader["product_price"]),
+                        ProductImage = reader["product_image"].ToString()
+                    };
+                    products.Add(p);
+                }
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving top 4 latest products: " + ex.Message);
+            }
+
+            return products;
+        }
+
+        public string selectBrandName(int id)
+        {
+
+            string brandName = null;
+            con.Open();
+            string queryBrand = "select brand_name from Brands where brand_id=@id";
+            SqlCommand cmd = new SqlCommand(queryBrand, con);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                brandName = (string)rd["brand_name"];
+            }
+            con.Close();
+            return brandName;
+        }
+        public string selectGenderName(int id)
+        {
+
+            string genderName = null;
+            con.Open();
+            string queryGender = "select gender_name from Genders where gender_id =@id";
+            SqlCommand cmd = new SqlCommand(queryGender, con);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader rd = cmd.ExecuteReader();
+            if (rd.Read())
+            {
+                genderName = (string)rd["gender_name"];
+            }
+            con.Close();
+            return genderName;
+        }
+
+        public List<Product> dsProductBySearch(string key)
+        {
+            List<Product> ds = new List<Product>();
+            string sql = "SELECT *FROM Products where product_name like @product_name";
+            con.Open();
+            SqlCommand cmd = new SqlCommand(sql, con);
+            cmd.Parameters.AddWithValue("product_name", "%" + key + "%");
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                ds.Add(p);
+            }
+            con.Close();
+            List<Product> dsLop = ds;
+            return dsLop;
+        }
+
+
+        public List<Product> selectTop5ProductCanNotBeSold()
+        {
+            List<Product> ds = new List<Product>();
+            con.Open();
+            string sql = "SELECT TOP 5 p.* FROM Products p " +
+                         "LEFT JOIN OrderItem oi ON p.product_id = oi.product_id " +
+                         "WHERE oi.product_id IS NULL";  
+            SqlCommand cmd = new SqlCommand(sql, con);
+            SqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Product p = new Product();
+                p.ProductId = (int)rd["product_id"];
+                p.ProductName = (string)rd["product_name"];
+                p.ProductDescription = (string)rd["product_des"];
+                p.ProductPrice = (decimal)rd["product_price"];
+                p.ProductQuantity = (int)rd["product_quantity"];
+                p.ProductOrigin = (string)rd["product_origin"];
+                p.ProductDiameter = (decimal)rd["product_diameter"];
+                p.ProductThickness = (decimal)rd["product_thickness"];
+                p.ProductWarrantyPeriod = (string)rd["product_warrantyperiod"];
+                p.ProductImage = (string)rd["product_image"];
+                p.GenderId = (int)rd["gender_id"];
+                p.ProductGlass = (string)rd["product_glass"];
+                p.BrandId = (int)rd["brand_id"];
+                p.ProductColor = (string)rd["product_color"];
+                p.ProductStrap = (string)rd["product_strap"];
+                p.ProductCreatedDate = (DateTime)rd["product_createddate"];
+                ds.Add(p);
+            }
+            con.Close();
+            return ds;
+        }
+
+
+
     }
+
 }

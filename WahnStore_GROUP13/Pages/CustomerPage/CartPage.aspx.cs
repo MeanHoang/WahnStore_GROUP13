@@ -29,10 +29,23 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
             // Lấy danh sách CartItem dựa trên customerId
             List<CartItem> items = data.GetCartItemsByCustomerId(customerId);
 
-            // Hiển thị danh sách CartItem trong GridView
+            // Fetch product names and add to each cart item
+            DataProduct dataProduct = new DataProduct();
+            foreach (var item in items)
+            {
+                Product product = dataProduct.GetProductById(item.ProductId);
+                if (product != null)
+                {
+                    item.ProductName = product.ProductName; // Fetching product name directly
+                }
+            }
+
+            // Display the CartItem list in GridView
             CartGridView.DataSource = items;
             CartGridView.DataBind();
         }
+
+
 
         protected void CartGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -73,8 +86,7 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
 
         protected void CheckoutButton_Click(object sender, EventArgs e)
         {
-            // Xử lý sự kiện khi người dùng nhấn nút "Thanh toán"
-            // Chuyển hướng người dùng đến trang thanh toán
+
             Response.Redirect("~/Pages/CustomerPage/Checkout.aspx");
         }
 

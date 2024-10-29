@@ -56,7 +56,11 @@ namespace WahnStore_GROUP13.Classes
             try
             {
                 con.Open();
-                string query = "SELECT * FROM CartItem WHERE CartId = @CartId";
+                string query = @"
+            SELECT ci.CartItemId, ci.CartId, ci.ProductId, ci.Quantity, ci.Price, p.ProductName
+            FROM CartItem ci
+            INNER JOIN Products p ON ci.ProductId = p.ProductId
+            WHERE ci.CartId = @CartId";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@CartId", cartId);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -69,7 +73,8 @@ namespace WahnStore_GROUP13.Classes
                         CartId = Convert.ToInt32(reader["CartId"]),
                         ProductId = Convert.ToInt32(reader["ProductId"]),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
-                        Price = Convert.ToDecimal(reader["Price"])
+                        Price = Convert.ToDecimal(reader["Price"]),
+                        ProductName = reader["ProductName"].ToString() // Assuming the product name is fetched from the database
                     };
                     cartItems.Add(item);
                 }
@@ -84,6 +89,7 @@ namespace WahnStore_GROUP13.Classes
             }
             return cartItems;
         }
+
 
         // Thêm mục vào giỏ hàng
         public bool AddToCart(int cartId, int productId, int quantity, decimal price)
@@ -297,6 +303,51 @@ namespace WahnStore_GROUP13.Classes
             }
         }
 
+        public CartItem GetCartItemById(int cartItemId)
+        {
+            CartItem cartItem = null;
+                con.Open();
+                string query = "SELECT * FROM CartItem WHERE cartitem_id = @cartItemId";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@cartItemId", cartItemId);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    cartItem = new CartItem
+                    {
+                        CartItemId = Convert.ToInt32(reader["cartitem_id"]),
+                        CartId = Convert.ToInt32(reader["cart_id"]),
+                        ProductId = Convert.ToInt32(reader["product_id"]),
+                        Quantity = Convert.ToInt32(reader["cart_quantity"]),
+                        Price = Convert.ToDecimal(reader["cart_price"])
+                    };
+                }
+
+            return cartItem;
+        }
+        public bool RemoveCartItemsByCartId(int cartId)
+        {
+            try
+            {
+                con.Open();
+                string query = "DELETE FROM CartItem WHERE cart_id = @CartId";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@CartId", cartId);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error removing cart items by cartId: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
     }
 }
+

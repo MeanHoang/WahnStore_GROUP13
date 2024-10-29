@@ -1,42 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using WahnStore_GROUP13.Classes;
 
 namespace WahnStore_GROUP13.Pages.CustomerPage
 {
-    public partial class CustomerMaster : System.Web.UI.MasterPage
+    public partial class CustomerMaster : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                // Kiểm tra xem có Session["Username"] không
+                // Check if there is a session variable named "Username"
                 if (Session["Username"] != null)
                 {
-                    // Người dùng đã đăng nhập, hiển thị nút link đến trang quản lý tài khoản
+                    // User is logged in, show account management and logout buttons
                     hypManageAccount.Visible = true;
                     hypManageCart.Visible = true;
                     btnLogout.Visible = true;
+                    hypLogin.Visible = false;
+                    hypRegister.Visible = false;
                 }
                 else
                 {
-                    // Người dùng chưa đăng nhập, hiển thị nút link đến trang đăng nhập và đăng ký
+                    // User is not logged in, show login and register links
                     hypLogin.Visible = true;
                     hypRegister.Visible = true;
+                    hypManageAccount.Visible = false;
+                    hypManageCart.Visible = false;
+                    btnLogout.Visible = false;
                 }
+            }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            string query = txtSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(query))
+            {
+                // Perform search and get search results if needed. For simplicity, let's assume the method SearchProductsByName exists.
+                List<Product> searchResults = new DataProduct().SearchProductsByName(query);
+
+                // Redirect to SearchItem.aspx with the query parameter.
+                Response.Redirect($"SearchItem.aspx?query={Uri.EscapeDataString(query)}");
+            }
+            else
+            {
+                // Optionally handle empty search query if needed.
+                // You can add a message or prompt the user.
             }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
         {
-            // Xóa Session["Username"]
-            Session["Username"] = null;
+            // Handle the logout functionality here
+            // For example, clear the session or redirect to the login page
 
-            // Chuyển hướng đến trang chủ hoặc trang đăng nhập
-            Response.Redirect("~/Pages/CustomerPage/Home.aspx");
+            Session.Clear();
+            Response.Redirect("~/Pages/CustomerPage/Login.aspx");
         }
     }
 }

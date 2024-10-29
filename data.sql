@@ -1,4 +1,4 @@
-
+Ôªø
 CREATE DATABASE WahnStore;
 
 USE WahnStore;
@@ -26,9 +26,9 @@ CREATE TABLE Customers (
     CONSTRAINT FK_Customers_Genders FOREIGN KEY (gender_id) REFERENCES Genders(gender_id)
 );
 
--- ThÍm m?t kh·ch h‡ng m?i v‡o b?ng Customers
+-- Th√™m m?t kh√°ch h√†ng m?i v√†o b?ng Customers
 INSERT INTO Customers (customer_fullname, customer_email, customer_phone, customer_username, customer_password, customer_address, gender_id, customer_avatar)
-VALUES (N'Tr?nh Minh Ho‡ng', 'viethoangxtpro08@gmail.com', '0399911384', 'mhoang0000', '123456', N'H‡ N?i', 1, 'avatar1.jpg');
+VALUES (N'Tr?nh Minh Ho√†ng', 'viethoangxtpro08@gmail.com', '0399911384', 'mhoang0000', '123456', N'H√† N?i', 1, 'avatar1.jpg');
 
 
 DELETE FROM Customers WHERE customer_id = 4;
@@ -36,7 +36,7 @@ DELETE FROM Customers WHERE customer_id = 4;
 UPDATE Customers
 SET 
 
-    customer_avatar = N'linh.jfif' -- Thay ??i tÍn file avatar n?u c?n
+    customer_avatar = N'linh.jfif' -- Thay ??i t√™n file avatar n?u c?n
 WHERE
     customer_id = 5;
 
@@ -55,7 +55,28 @@ CREATE TABLE Admins (
     gender_id INT,
     CONSTRAINT FK_Admins_Genders FOREIGN KEY (gender_id) REFERENCES Genders(gender_id)
 );
+INSERT INTO Admins (
+    admin_fullname, 
+    admin_email, 
+    admin_phone, 
+    admin_username, 
+    admin_password, 
+    admin_address, 
+    admin_avatar, 
+    gender_id
+)
+VALUES (
+    'Nguyen Van A', 
+    'nguyenvana@example.com', 
+    '0123456789', 
+    'mhoang0000', 
+    '123456', 
+    '123 Example St, Hanoi', 
+    'avatar_image.png', 
+    1
+);
 
+SELECT * FROM Admins;
 CREATE TABLE Brands (
     brand_id INT PRIMARY KEY IDENTITY(1,1),
     brand_name NVARCHAR(100) NOT NULL,
@@ -66,7 +87,7 @@ CREATE TABLE Brands (
 INSERT INTO Brands (brand_name, brand_des) VALUES
     (N'Rolex', N'The Rolex Watch Company was founded in 1905 by Hans Wilsdorf and Alfred Davis.'),
     (N'Omega', N'Omega SA is a Swiss luxury watchmaker based in Biel/Bienne, Switzerland.'),
-    (N'Tissot', N'Tissot is a Swiss luxury watchmaker. The company was founded in Le Locle, Switzerland by Charles-FÈlicien Tissot and his son Charles-…mile Tissot in 1853.');
+    (N'Tissot', N'Tissot is a Swiss luxury watchmaker. The company was founded in Le Locle, Switzerland by Charles-F√©licien Tissot and his son Charles-√âmile Tissot in 1853.');
 
 SELECT * FROM Brands;
 CREATE TABLE Products(
@@ -76,34 +97,42 @@ CREATE TABLE Products(
     product_price DECIMAL(18, 2) NOT NULL,
     product_quantity INT NOT NULL,
     product_origin NVARCHAR(100),  --Xu?t x?:Nh?t B?n
-    product_diameter DECIMAL(5, 2),  --???ng kÌnh m?t s?
-    product_thickness DECIMAL(5, 2), --B? d‡y m?t s?
-    product_warrantyperiod NVARCHAR(100), --Th?i gian b?o h‡nh
+    product_diameter DECIMAL(5, 2),  --???ng k√≠nh m?t s?
+    product_thickness DECIMAL(5, 2), --B? d√†y m?t s?
+    product_warrantyperiod NVARCHAR(100), --Th?i gian b?o h√†nh
     product_image  NVARCHAR(255),
     gender_id INT,
-    product_glass NVARCHAR(52), --Lo?i kÌnh c?a m·y
+    product_glass NVARCHAR(52), --Lo?i k√≠nh c?a m√°y
     brand_id INT,
-    product_color NVARCHAR(52), --M‡u m?t s?
-    product_strap NVARCHAR(52), --Ch?t li?u d‚y                          
+    product_color NVARCHAR(52), --M√†u m?t s?
+    product_strap NVARCHAR(52), --Ch?t li?u d√¢y                          
     product_createddate DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_Products_Gender FOREIGN KEY (gender_id) REFERENCES Genders(gender_id),
     CONSTRAINT FK_Products_Brand FOREIGN KEY (brand_id) REFERENCES Brands(brand_id)
 );
 
--- ChËn d? li?u cho s?n ph?m m?i v‡o b?ng "Products"
+-- Ch√®n d? li?u cho s?n ph?m m?i v√†o b?ng "Products"
 INSERT INTO Products  (product_name, product_des, product_price, product_quantity, product_origin, product_diameter, product_thickness, product_warrantyperiod, product_image, gender_id, product_glass, brand_id, product_color, product_strap)
 VALUES
     (N'Tissot Le Locle Powermatic', 
-	N'Tissot Le Locle Powermatic 80 39.3mm T006.407.16.033.00 ñ M?u ??ng h? c? c? ?i?n sang tr?ng c?a Tissot',
+	N'Tissot Le Locle Powermatic 80 39.3mm T006.407.16.033.00 ‚Äì M?u ??ng h? c? c? ?i?n sang tr?ng c?a Tissot',
 	17500000, 25, N'Th?y S?', 39.3, 9.8, N'2 n?m', N'tissot1.jpg', 1, N'Sapphire',
-	3, N'Tr?ng', N'D‚y da chÌnh h„ng');
+	3, N'Tr?ng', N'D√¢y da ch√≠nh h√£ng');
 
 INSERT INTO Products  (product_name, product_des, product_price, product_quantity, product_origin, product_diameter, product_thickness, product_warrantyperiod, product_image, gender_id, product_glass, brand_id, product_color, product_strap)
 VALUES
     (N'Rolex Submariner Date', 
-	N'??ng h? Rolex Submariner Date hi?n ?„ cÛ s?n trÍn gian h‡ng c?a Sneaker Daily. C? h?i hi?m cÛ ?? s? h?u mÛn ?? cao c?p n‡y d‡nh cho c·c qu˝ Ùng.',
+	N'??ng h? Rolex Submariner Date hi?n ?√£ c√≥ s?n tr√™n gian h√†ng c?a Sneaker Daily. C? h?i hi?m c√≥ ?? s? h?u m√≥n ?? cao c?p n√†y d√†nh cho c√°c qu√Ω √¥ng.',
 	680000000, 5, N'Th?y S?', 39.3, 9.8, N'2 n?m', N'rolex1.jpg', 1, N'Sapphire',
-	3, N'Xanh d??ng', N'ThÈp khÙng g? 316L');
+	3, N'Xanh d??ng', N'Th√©p kh√¥ng g? 316L');
+
+	INSERT INTO Products  (product_name, product_des, product_price, product_quantity, product_origin, product_diameter, product_thickness, product_warrantyperiod, product_image, gender_id, product_glass, brand_id, product_color, product_strap)
+VALUES
+    (N'Tissot Lovely Square', 
+	N'Tissot n·ªØ 20mm Lovely Square T058.109.33.456.00 phi√™n b·∫£n sang tr·ªçng 12 vi√™n kim c∆∞∆°ng t∆∞∆°ng ·ª©ng v·ªõi 12 m√∫i gi·ªù ƒë√≠nh tr√™n n·ªÅn m·∫∑t s·ªë vu√¥ng si√™u m·ªèng.',
+	12080000, 5, N'Th·ª•y Sƒ©', 20, 7, N'2 nƒÉm', N'tissot2.png', 2, N'Sapphire',
+	3, N'V√†ng h·ªìng', N'Th√©p kh√¥ng g·ªâ');
+
 
 	UPDATE Products 
 SET product_price = 6800000
@@ -111,11 +140,30 @@ WHERE product_name = N'Rolex Submariner Date';
 
 SELECT * FROM Products;
 
-DROP TABLE Shipment;
+
+CREATE TABLE Carts (
+     INT PRIMARY KEY IDENTITY(1,1),
+    customer_id INT NOT NULL,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+CREATE TABLE CartItem (
+    cartitem_id INT PRIMARY KEY IDENTITY(1,1),
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    cart_quantity INT NOT NULL,
+    cart_price DECIMAL(18, 2) NOT NULL,  -- Storing the price at the time of adding to cart
+    FOREIGN KEY (cart_id) REFERENCES Carts(cart_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
 
 CREATE TABLE Shipment (
     shipment_id INT PRIMARY KEY IDENTITY(1,1),
     shipment_address NVARCHAR(100),
+	shipment_city NVARCHAR(100),
+	shipment_country NVARCHAR(100),
     shipment_date DATETIME DEFAULT GETDATE(),
 	customer_id INT NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
@@ -135,31 +183,14 @@ CREATE TABLE Orders (
 CREATE TABLE OrderItem (
     orderitem_id INT PRIMARY KEY IDENTITY(1,1),
     order_price DECIMAL(18, 2) NOT NULL,
+	quantity DECIMAL(18, 2) NOT NULL,
 	product_id INT NOT NULL,
 	order_id INT NOT NULL,
 	 FOREIGN KEY (product_id) REFERENCES Products(product_id),
     FOREIGN KEY (order_id) REFERENCES Orders(order_id)
 );
 
-CREATE TABLE Carts (
-    cart_id INT PRIMARY KEY IDENTITY(1,1),
-    customer_id INT NOT NULL,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
-);
 
-CREATE TABLE CartItem (
-    cartitem_id INT PRIMARY KEY IDENTITY(1,1),
-    cart_id INT NOT NULL,
-    product_id INT NOT NULL,
-    cart_quantity INT NOT NULL,
-    cart_price DECIMAL(18, 2) NOT NULL,  -- Storing the price at the time of adding to cart
-    FOREIGN KEY (cart_id) REFERENCES Carts(cart_id),
-    FOREIGN KEY (product_id) REFERENCES Products(product_id)
-);
-
-
-
-
+SELECT * FROM Orders;
 
 

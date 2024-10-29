@@ -41,7 +41,7 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
             // Add the customer to the database
             bool success = data.AddCustomer(customer);
             string avatarPath = data.SaveAvatar(fuAvatar.PostedFile);
-            imgAvatar.Src = avatarPath;
+            
 
             if (success)
             {

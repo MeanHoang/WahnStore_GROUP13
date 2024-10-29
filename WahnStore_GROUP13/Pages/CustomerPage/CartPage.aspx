@@ -1,54 +1,59 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/CustomerPage/CustomerMaster.Master" AutoEventWireup="true" CodeBehind="CartPage.aspx.cs" Inherits="WahnStore_GROUP13.Pages.CustomerPage.CartPage" %>
+﻿<%@ Page Title="Giỏ hàng của bạn" Language="C#" MasterPageFile="~/Pages/CustomerPage/CustomerMaster.Master" AutoEventWireup="true" CodeBehind="CartPage.aspx.cs" Inherits="WahnStore_GROUP13.Pages.CustomerPage.CartPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <title>Giỏ hàng của bạn</title>
+    <title>Giỏ hàng của bạn</title>
     <style>
-        /* CSS cho trang giỏ hàng */
-        /* Định dạng cho các dòng trong bảng */
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .cart-table th, .cart-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.1em;
+        }
+
         .cart-table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
-        /* Định dạng cho tiêu đề bảng */
-        .cart-table th {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px;
-        }
-
-        /* Định dạng cho ô trong bảng */
-        .cart-table td {
-            padding: 8px;
-        }
-
-        /* Định dạng cho nút */
         .checkout-btn {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 14px 28px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 1.2em;
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+            transition: background-color 0.3s;
         }
 
-        /* Định dạng cho nút khi rê chuột qua */
         .checkout-btn:hover {
             background-color: #45a049;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Giỏ hàng của bạn</h1>
-    <div>
-        <h1>Cart Items</h1>
-<asp:GridView ID="CartGridView" runat="server" AutoGenerateColumns="False" 
-    OnRowDeleting="CartGridView_RowDeleting" OnRowCommand="CartGridView_RowCommand" DataKeyNames="CartItemId">            
-    <Columns>         
-                <asp:BoundField DataField="CartItemId" HeaderText="CartItem ID" />
-                <asp:BoundField DataField="ProductId" HeaderText="Product ID" />
+    <h1 class="cart-title">Giỏ hàng của bạn</h1>
+    <div class="cart-container">
+        <asp:GridView ID="CartGridView" runat="server" AutoGenerateColumns="False" 
+            OnRowDeleting="CartGridView_RowDeleting" OnRowCommand="CartGridView_RowCommand" DataKeyNames="CartItemId" CssClass="cart-table">
+            <Columns>
+                <asp:BoundField DataField="ProductName" HeaderText="Product Name" />
                 <asp:TemplateField HeaderText="Giảm">
                     <ItemTemplate>
                         <asp:Button ID="DecreaseButton" runat="server" Text="-" CommandName="Decrease" CommandArgument='<%# Eval("CartItemId") %>' />
@@ -68,5 +73,7 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
+
+        <asp:Button ID="CheckoutButton" runat="server" Text="Thanh toán" CssClass="checkout-btn" OnClick="CheckoutButton_Click" />
     </div>
 </asp:Content>

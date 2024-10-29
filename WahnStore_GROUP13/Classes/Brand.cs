@@ -14,5 +14,11 @@ namespace WahnStore_GROUP13.Classes
         {
 
         }
+        public Brand(int brandId, string brandName, string brandDescription)
+        {
+            BrandId = brandId;
+            BrandName = brandName;
+            BrandDescription = brandDescription;
+        }
     }
 }

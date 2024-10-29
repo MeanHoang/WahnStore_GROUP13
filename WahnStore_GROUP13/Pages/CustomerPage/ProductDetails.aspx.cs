@@ -19,6 +19,35 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
             if (!IsPostBack)
             {
                 HienThi();
+                HienThiRelatedProducts();
+            }
+        }
+        private void HienThiRelatedProducts()
+        {
+            int productId;
+            if (int.TryParse(Request.QueryString["productId"], out productId))
+            {
+                Product product = data.GetProductById(productId);
+                if (product != null)
+                {
+                    // Fetch related products based on the brand ID of the current product
+                    List<Product> relatedProducts = data.GetProductsByBrand(product.BrandId);
+
+                    // Bind related products to the RelatedProductsContainer
+                    if (relatedProducts != null && relatedProducts.Count > 0)
+                    {
+                        RelatedProductsListView.DataSource = relatedProducts;
+                        RelatedProductsListView.DataBind();
+                    }
+                }
+                else
+                {
+                    // Handle product not found scenario
+                }
+            }
+            else
+            {
+                // Handle invalid productId scenario
             }
         }
 
@@ -35,12 +64,12 @@ namespace WahnStore_GROUP13.Pages.CustomerPage
                     ProductName.Text = product.ProductName;
                     ProductDescription.Text = product.ProductDescription;
                     ProductPrice.Text = string.Format("{0:N0} VND", product.ProductPrice);
-                    ProductQuantity.Text = "Quantity: " + product.ProductQuantity;
-                    ProductOrigin.Text = "Origin: " + product.ProductOrigin;
-                    ProductDiameter.Text = "Diameter: " + product.ProductDiameter + " mm";
-                    ProductThickness.Text = "Thickness: " + product.ProductThickness + " mm";
-                    ProductWarrantyPeriod.Text = "Warranty Period: " + product.ProductWarrantyPeriod;
-                    ProductGender.Text = "Giới tính: " + data1.GetGenderNameById(product.GenderId);
+                    ProductQuantity.Text = "Số lượng còn lại: " + product.ProductQuantity;
+                    ProductOrigin.Text = "Xuất xứ: " + product.ProductOrigin;
+                    ProductDiameter.Text = "Độ dài dây: " + product.ProductDiameter + " mm";
+                    ProductThickness.Text = "Độ dày mặt kính: " + product.ProductThickness + " mm";
+                    ProductWarrantyPeriod.Text = "Thời gian bảo hành: " + product.ProductWarrantyPeriod;
+                    ProductGender.Text = "Sản phẩm cho: " + data1.GetGenderNameById(product.GenderId);
                     ProductBrand.Text = "Hãng: " + data2.GetBrandNameById(product.GenderId);
                     ProductGlass.Text = "Glass: " + product.ProductGlass;
                     ProductColor.Text = "Color: " + product.ProductColor;
